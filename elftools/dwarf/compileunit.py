@@ -75,6 +75,17 @@ class CompileUnit(object):
         """
         return self._get_DIE(0)
 
+    def get_first_DIE(self):
+        """ Same functionality as get_top_DIE(), without loading entire
+            DIE tree
+        """
+        die_offset = self.cu_die_offset
+        die = DIE(
+                cu=self,
+                stream=self.dwarfinfo.debug_info_sec.stream,
+                offset=die_offset)
+        return die
+
     def iter_DIEs(self):
         """ Iterate over all the DIEs in the CU, in order of their appearance.
             Note that null DIEs will also be returned.

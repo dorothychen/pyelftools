@@ -136,7 +136,7 @@ class DWARFInfo(object):
         """
         # The line program is pointed to by the DW_AT_stmt_list attribute of
         # the top DIE of a CU.
-        top_DIE = CU.get_top_DIE()
+        top_DIE = CU.get_first_DIE()
         if 'DW_AT_stmt_list' in top_DIE.attributes:
             return self._parse_line_program_at_offset(
                     top_DIE.attributes['DW_AT_stmt_list'].value, CU.structs)
