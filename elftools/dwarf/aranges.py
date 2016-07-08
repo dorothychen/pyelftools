@@ -28,8 +28,9 @@ class ARanges(object):
         self.entries.sort(key=lambda entry: entry[0])
         self.keys = [entry[0] for entry in self.entries]
 
+
     def cu_offset_at_addr(self, addr):
-        tup = self.entries[bisect_left(self.keys, addr)]
+        tup = self.entries[bisect_left(self.keys, addr) - 1]
         return tup[2] # "info_offset"
         
 
@@ -37,6 +38,7 @@ class ARanges(object):
     def _get_entries(self):
         """ Populate self.entries with ARangeEntry tuples for each range of addresses
         """
+        self.stream.seek(0)
         entries = []
         offset = 0
 
