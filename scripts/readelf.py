@@ -1001,7 +1001,9 @@ class ReadElf(object):
         for entry in unordered_entries:
             if prev_offset != entry.info_offset:
                 if entry != unordered_entries[0]:
-                    self._emitline(('    %016x %016x' % (0, 0)))
+                    self._emitline('    %s %s' % (
+                        self._format_hex(0, fullhex=True, lead0x=False), 
+                        self._format_hex(0, fullhex=True, lead0x=False)))
                 self._emitline('  Length:                   %d' % (entry.unit_length))
                 self._emitline('  Version:                  %d' % (entry.version))
                 self._emitline('  Offset into .debug_info:  0x%x' % (entry.info_offset))
