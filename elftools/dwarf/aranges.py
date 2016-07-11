@@ -13,9 +13,9 @@ from bisect import bisect_left
 import math
 
 # An entry in the aranges table; 
-# begin_addr: 
-# length: 
-# info_offset: 
+# begin_addr: The beginning address in the CU
+# length: The length of the address range in this entry
+# info_offset: The CU's offset into .debug_info
 # see 6.1.2 in DWARF4 docs for explanation of the remaining fields
 ARangeEntry = namedtuple('ARangeEntry', 
     'begin_addr length info_offset unit_length version address_size segment_size')
