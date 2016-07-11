@@ -990,6 +990,11 @@ class ReadElf(object):
         # seems redundent, but we need to get the unsorted set of entries to match system readelf
         unordered_entries = aranges_table._get_entries()
        
+        if len(unordered_entries) == 0:
+            self._emitline()
+            self._emitline("Section '.debug_aranges' has no debugging data.")
+            return
+            
         self._emitline('Contents of the %s section:' % self._dwarfinfo.debug_aranges_sec.name)
         self._emitline()
         prev_offset = None
@@ -1004,9 +1009,13 @@ class ReadElf(object):
                 self._emitline('  Segment Size:             %d' % (entry.segment_size))
                 self._emitline()
                 self._emitline('    Address            Length')
-            self._emitline('    %016x %016x' % (entry.begin_addr, entry.length))
+            self._emitline('    %s %s' % (
+                self._format_hex(entry.begin_addr, fullhex=True, lead0x=False), 
+                self._format_hex(entry.length, fullhex=True, lead0x=False)))
             prev_offset = entry.info_offset
-        self._emitline(('    %016x %016x' % (0, 0)))
+        self._emitline('    %s %s' % (
+                self._format_hex(0, fullhex=True, lead0x=False), 
+                self._format_hex(0, fullhex=True, lead0x=False)))
 
     def _dump_debug_frames_interp(self):
         """ Dump the interpreted (decoded) frame information from .debug_frame
