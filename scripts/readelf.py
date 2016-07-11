@@ -984,12 +984,14 @@ class ReadElf(object):
     def _dump_debug_aranges(self):
         """ Dump the aranges table
         """
-        self._emitline('Contents of the %s section:' % self._dwarfinfo.debug_aranges_sec.name)
-        self._emitline()
-
         aranges_table = self._dwarfinfo.get_aranges()
+        if aranges_table == None:
+            return
         # seems redundent, but we need to get the unsorted set of entries to match system readelf
         unordered_entries = aranges_table._get_entries()
+       
+        self._emitline('Contents of the %s section:' % self._dwarfinfo.debug_aranges_sec.name)
+        self._emitline()
         prev_offset = None
         for entry in unordered_entries:
             if prev_offset != entry.info_offset:

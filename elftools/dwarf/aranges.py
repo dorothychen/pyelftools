@@ -77,7 +77,7 @@ class ARanges(object):
                 # entries in this set/CU
                 addr = struct_parse(addr_size('addr'), self.stream)
                 length = struct_parse(addr_size('length'), self.stream)
-                while addr != 0 and length != 0:
+                while addr != 0 or length != 0:
                     # 'begin_addr length info_offset version address_size segment_size'
                     entries.append(
                         ARangeEntry(begin_addr=addr, 
@@ -90,7 +90,7 @@ class ARanges(object):
                     addr = struct_parse(addr_size('addr'), self.stream)
                     length = struct_parse(addr_size('length'), self.stream)
             # Segmentation exists in executable
-            elif segment_size != 0:
+            elif aranges_header["segment_size"] != 0:
                 raise NotImplementedError("Segmentation not implemented")
 
             offset = (offset 
