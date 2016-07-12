@@ -9,7 +9,7 @@
 import os
 from collections import namedtuple
 from ..common.utils import struct_parse
-from bisect import bisect_left
+from bisect import bisect_right
 import math
 
 # An entry in the aranges table; 
@@ -48,7 +48,7 @@ class ARanges(object):
         """ Given an address, get the offset of the CU it belongs to, where
             'offset' refers to the offset in the .debug_info section.
         """
-        tup = self.entries[bisect_left(self.keys, addr) - 1]
+        tup = self.entries[bisect_right(self.keys, addr) - 1]
         return tup.info_offset
         
 
